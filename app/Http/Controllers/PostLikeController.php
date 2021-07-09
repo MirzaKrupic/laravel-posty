@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Like;
 use Illuminate\Http\Request;
 
 class PostLikeController extends Controller
@@ -21,6 +22,13 @@ class PostLikeController extends Controller
         $post->likes()->create([
             'user_id' => $request->user()->id,
         ]);
+
+        return back();
+    }
+
+    public function destroy(Post $post, Request $request)
+    {
+        $request->user()->likes()->where('post_id', $post->id)->delete();
 
         return back();
     }
